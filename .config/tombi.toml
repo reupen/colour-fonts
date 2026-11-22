@@ -1,0 +1,7 @@
+#:schema https://raw.githubusercontent.com/nagi-sql/nagi-config/refs/heads/main/jsonschema/generated/nagi.json
+
+[files]
+exclude = ["*/src/**"]
+
+[format.rules]
+line-width = 88
