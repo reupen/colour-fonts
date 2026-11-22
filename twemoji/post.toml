@@ -1,0 +1,7 @@
+output_file = "twemoji-colrv0.ttf"
+
+[metadata]
+copyright = "Graphics: Copyright (c) 2014–2021 Twitter, 2022–present Jason Sofonia & Justine De Caires"
+description = "COLRv0 font based on https://github.com/jdecked/twemoji"
+licence = "Graphics: CC-BY 4.0"
+licence_url = "Graphics: https://github.com/jdecked/twemoji/blob/main/LICENSE-GRAPHICS"

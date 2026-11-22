@@ -1,0 +1,14 @@
+[project]
+name = "colour-fonts"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+authors = [{ name = "Reupen Shah", email = "reupen@users.noreply.github.com" }]
+dependencies = ["fonttools>=4.68.0", "nanoemoji>=0.16.0", "picosvg>=0.23.0"]
+
+[dependency-groups]
+dev = ["lefthook>=2.2.2", "ruff>=0.17.6", "tombi>=1.11.3"]
+
+[tool.uv]
+required-version = ">=0.13.5"

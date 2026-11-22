@@ -1,0 +1,7 @@
+# :schema: https://raw.githubusercontent.com/astral-sh/ruff/refs/heads/main/ruff.schema.json
+
+[lint]
+extend-select = ["I"]
+
+[lint.isort]
+split-on-trailing-comma = false

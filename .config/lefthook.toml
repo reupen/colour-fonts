@@ -1,0 +1,21 @@
+#:schema https://lefthook.dev/schema.json
+
+[pre-commit.commands.tombi]
+run = "uv run tombi format -- {staged_files}"
+stage_fixed = true
+glob = "*.toml"
+
+[pre-commit.commands.ruff-check]
+run = "uv run ruff check --fix -- {staged_files}"
+stage_fixed = true
+file_types = ["text/x-python"]
+
+[pre-commit.commands.ruff-format]
+run = "uv run ruff format -- {staged_files}"
+stage_fixed = true
+file_types = ["text/x-python"]
+
+[pre-commit.commands.oxfmt]
+run = "npm exec --no oxfmt -- --no-error-on-unmatched-pattern {staged_files}"
+stage_fixed = true
+glob = "*.{json,md,yml,yaml}"

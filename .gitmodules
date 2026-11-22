@@ -1,0 +1,3 @@
+[submodule "twemoji/src"]
+	path = twemoji/src
+	url = https://github.com/jdecked/twemoji
