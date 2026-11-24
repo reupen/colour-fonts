@@ -11,3 +11,5 @@ jobs:
   auto-merge:
     name: Enable auto-merge
     uses: reupen/github-actions/.github/workflows/auto-merge.yml@v1
+    with:
+      excluded-dependencies: twemoji/src
