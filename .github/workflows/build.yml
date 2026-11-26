@@ -8,6 +8,7 @@ on:
   push:
     branches:
       - main
+      - test/*
 
 jobs:
   lint:
@@ -36,6 +37,14 @@ jobs:
 
       - name: Install uv
         uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+
+      - name: Restore build cache
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 #  v6.1.0
+        with:
+          path: twemoji/build
+          key:
+            ${{ runner.os }}-twemoji-${{ hashFiles('uv.lock', 'twemoji/config.toml',
+            'twemoji/src/assets/svg/*.svg') }}
 
       - name: Build
         run: uv run twemoji/build.py
