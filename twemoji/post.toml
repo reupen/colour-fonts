@@ -5,3 +5,26 @@ copyright = "Graphics: Copyright (c) 2014–2021 Twitter, 2022–present Jason S
 description = "COLRv0 font based on https://github.com/jdecked/twemoji"
 licence = "Graphics: CC-BY 4.0"
 licence_url = "Graphics: https://github.com/jdecked/twemoji/blob/main/LICENSE-GRAPHICS"
+
+[[variants]]
+output_file = "twemoji-colrv0--no-keycap.ttf"
+omit = [
+  "U+0023",  # #
+  "U+002A",  # *
+  "U+0030",  # 0
+  "U+0031",  # 1
+  "U+0032",  # 2
+  "U+0033",  # 3
+  "U+0034",  # 4
+  "U+0035",  # 5
+  "U+0036",  # 6
+  "U+0037",  # 7
+  "U+0038",  # 8
+  "U+0039",  # 9
+  "U+00A9",  # ©
+  "U+00AE",  # ®
+  "U+203C",  # ‼
+  "U+2049",  # ⁉
+  "U+2122",  # ™
+  "U+2139",  # ℹ
+]

@@ -33,8 +33,19 @@ SVG files.
    uv run twemoji/build.py
    ```
 
-If the command is successful, the built font will be at
-`twemoji/build/twemoji-colrv0.ttf`.
+If the command is successful, the built fonts will in the `twemoji/dist` directory.
+
+Two fonts are built:
+
+- `twemoji-colrv0.ttf` – the standard version will all emojis
+- `twemoji-colrv0--no-keycap.ttf` - a version with emoji sequences for digits and some
+  other characters removed (see [twemoji/post.toml](./twemoji/post.toml) for a list of
+  removed code points)
+
+`twemoji-colrv0--no-keycap.ttf` will allow font fallback to be used for digits and the
+other omitted characters, but will not have support for emoji versions of those
+characters such as keycap emojis. With `twemoji-colrv0.ttf`, the non-emoji versions of
+those characters may not render.
 
 ## Contributing
 

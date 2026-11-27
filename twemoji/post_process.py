@@ -1,10 +1,14 @@
 from enum import IntEnum
+from io import BytesIO
 from pathlib import Path
 
+from fontTools import subset
 from fontTools.ttLib import TTFont
 from toml import load
 
 PARENT_DIR = Path(__file__).parent
+BUILD_DIR = PARENT_DIR / "build"
+DIST_DIR = PARENT_DIR / "dist"
 CONFIG_FILE = PARENT_DIR / "config.toml"
 POST_CONFIG_FILE = PARENT_DIR / "post.toml"
 SPACE_UPEM_FACTOR = 0.274
@@ -28,17 +32,17 @@ def post_process():
 
     font = TTFont(PARENT_DIR / "build" / config["output_file"])
 
-    name_table = font["name"]
+    metadata_config = post_config["metadata"]
 
-    copyright = post_config["metadata"]["copyright"]
-    description = post_config["metadata"]["description"]
-    licence = post_config["metadata"]["licence"]
-    licence_url = post_config["metadata"]["licence_url"]
-
-    name_table.setName(copyright, NameID.COPYRIGHT, 3, 1, 0x409)
-    name_table.setName(description, NameID.DESCRIPTION, 3, 1, 0x409)
-    name_table.setName(licence, NameID.LICENCE, 3, 1, 0x409)
-    name_table.setName(licence_url, NameID.LICENCE_URL, 3, 1, 0x409)
+    set_name_records(
+        font,
+        {
+            NameID.COPYRIGHT: metadata_config["copyright"],
+            NameID.DESCRIPTION: metadata_config["description"],
+            NameID.LICENCE: metadata_config["licence"],
+            NameID.LICENCE_URL: metadata_config["licence_url"],
+        },
+    )
 
     cmap = font.getBestCmap()
 
@@ -59,10 +63,39 @@ def post_process():
         width for width, _ in font["hmtx"].metrics.values()
     )
 
-    output_path = PARENT_DIR / "build" / post_config["output_file"]
+    DIST_DIR.mkdir(exist_ok=True)
+    output_path = DIST_DIR / post_config["output_file"]
     font.save(output_path)
 
+    for variant in post_config["variants"]:
+        stream = BytesIO()
+        font.save(stream)
+
+        variant_font = TTFont(stream)
+        omit = variant["omit"]
+
+        omit_glyphs(variant_font, omit)
+
+        output_name = variant["output_file"]
+        variant_font.save(DIST_DIR / output_name)
+
     print(f"Post-processed font saved to: {output_path}")
+
+
+def omit_glyphs(font: TTFont, omit: list[str]):
+    codepoints = {int(value.removeprefix("U+"), 16) for value in omit}
+    keep_unicodes = font.getBestCmap().keys() - codepoints
+
+    options = subset.Options()
+    subsetter = subset.Subsetter(options=options)
+    subsetter.populate(unicodes=keep_unicodes)
+    subsetter.subset(font)
+
+
+def set_name_records(font: TTFont, records: dict[int, str]):
+    name_table = font["name"]
+    for property_id, value in records.items():
+        name_table.setName(value, property_id, 3, 1, 1033)
 
 
 if __name__ == "__main__":
