@@ -8,6 +8,7 @@ on:
   push:
     branches:
       - main
+      - test/*
 
 jobs:
   lint:
@@ -40,8 +41,14 @@ jobs:
       - name: Build
         run: uv run twemoji/build.py
 
-      - name: Upload artefact
+      - name: Upload artefact (twemoji-colrv0.ttf)
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
-          path: twemoji/build/twemoji-colrv0.ttf
+          path: twemoji/dist/twemoji-colrv0.ttf
+          archive: false
+
+      - name: Upload artefact (twemoji-colrv0--no-keycap.ttf)
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          path: twemoji/dist/twemoji-colrv0--no-keycap.ttf
           archive: false
